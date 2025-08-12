@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+This starter includes:
+- **[Shadcn/UI](https://ui.shadcn.com/)** - Beautiful, accessible UI components built with Radix UI and Tailwind CSS
+- **[AI Elements](https://ai-elements.dev/)** - Pre-built AI chat components for building conversational interfaces
+
 ## Getting Started
 
 First, run the development server:
@@ -19,6 +23,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Available Components
+
+### Shadcn/UI Components
+The project includes various UI components from Shadcn/UI. You can add more components using:
+```bash
+npx shadcn@latest add [component-name]
+```
+
+### AI Elements Components
+Pre-built AI chat components are available in `src/components/ai-elements/`:
+- Conversation management
+- Message handling
+- Code blocks with syntax highlighting
+- AI reasoning display
+- Tool integration
+- And many more...
 
 ## Learn More
 
