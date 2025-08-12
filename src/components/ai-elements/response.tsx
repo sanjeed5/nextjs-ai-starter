@@ -275,44 +275,45 @@ const components: Options['components'] = {
   },
 };
 
-export const Response = memo(
-  ({
-    className,
-    options,
-    children,
-    allowedImagePrefixes,
-    allowedLinkPrefixes,
-    defaultOrigin,
-    parseIncompleteMarkdown: shouldParseIncompleteMarkdown = true,
-    ...props
-  }: ResponseProps) => {
-    // Parse the children to remove incomplete markdown tokens if enabled
-    const parsedChildren =
-      typeof children === 'string' && shouldParseIncompleteMarkdown
-        ? parseIncompleteMarkdown(children)
-        : children;
+function ResponseComponent({
+  className,
+  options,
+  children,
+  allowedImagePrefixes,
+  allowedLinkPrefixes,
+  defaultOrigin,
+  parseIncompleteMarkdown: shouldParseIncompleteMarkdown = true,
+  ...props
+}: ResponseProps) {
+  const parsedChildren =
+    typeof children === 'string' && shouldParseIncompleteMarkdown
+      ? parseIncompleteMarkdown(children)
+      : children;
 
-    return (
-      <div
-        className={cn(
-          'size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0',
-          className,
-        )}
-        {...props}
+  return (
+    <div
+      className={cn(
+        'size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0',
+        className,
+      )}
+      {...props}
+    >
+      <HardenedMarkdown
+        components={components}
+        rehypePlugins={[rehypeKatex]}
+        remarkPlugins={[remarkGfm, remarkMath]}
+        allowedImagePrefixes={allowedImagePrefixes ?? ['*']}
+        allowedLinkPrefixes={allowedLinkPrefixes ?? ['*']}
+        defaultOrigin={defaultOrigin}
+        {...options}
       >
-        <HardenedMarkdown
-          components={components}
-          rehypePlugins={[rehypeKatex]}
-          remarkPlugins={[remarkGfm, remarkMath]}
-          allowedImagePrefixes={allowedImagePrefixes ?? ['*']}
-          allowedLinkPrefixes={allowedLinkPrefixes ?? ['*']}
-          defaultOrigin={defaultOrigin}
-          {...options}
-        >
-          {parsedChildren}
-        </HardenedMarkdown>
-      </div>
-    );
-  },
-  (prevProps, nextProps) => prevProps.children === nextProps.children,
+        {parsedChildren}
+      </HardenedMarkdown>
+    </div>
+  );
+}
+
+export const Response = memo(ResponseComponent, (prevProps, nextProps) =>
+  prevProps.children === nextProps.children,
 );
+Response.displayName = 'Response';
